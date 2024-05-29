@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    .error {
+        color: #ff6347;
+        font-size: 12px;
+    }
+    
+    body {
+        background-color:white;
+    }
+    
+    .card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        background-color: #007bff; 
+        color: #ffffff;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    
+    .form-control {
+        background-color: #f8f9fa; 
+        border: 1px solid #ced4da; 
+        border-radius: 5px;
+    }
+    
+    .btn-primary {
+        background-color: #007bff; 
+        border-color: #007bff; 
+        border-radius: 5px;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3; 
+        border-color: #0056b3; 
+    }
+</style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>Registration Form</h2>
+                </div>
+                <div class="card-body">
+                    <form id="registrationForm" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName">
+                            <span id="firstNameError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName">
+                            <span id="lastNameError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" class="form-control" id="dob" name="dob">
+                            <span id="dobError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span id="genderError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <textarea class="form-control" id="address" name="address"></textarea>
+                            <span id="addressError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="course">Course:</label>
+                            <select class="form-control" id="course" name="course">
+                                <option value="">Select</option>
+                                <option value="CSE">CSE</option>
+                                <option value="IT">IT</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="CIVIL">CIVIL</option>
+                                <option value="MECH">MECH</option>
+                            </select>
+                            <span id="courseError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="+91">
+                            <span id="phoneNumberError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                            <span id="emailError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                            <span id="passwordError" class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                            <span id="confirmPasswordError" class="error"></span>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validateForm() {
+        let firstName = document.getElementById("firstName").value.trim();
+        let lastName = document.getElementById("lastName").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let password = document.getElementById("password").value.trim();
+        let confirmPassword = document.getElementById("confirmPassword").value.trim();
+        let dob = document.getElementById("dob").value;
+        let gender = document.getElementById("gender").value;
+        let address = document.getElementById("address").value.trim();
+        let course = document.getElementById("course").value;
+        let phoneNumber = document.getElementById("phoneNumber").value.trim();
+
+        let errors = false;
+
+        if (firstName === "") {
+            document.getElementById("firstNameError").textContent = "First name is required";
+            errors = true;
+        } else {
+            document.getElementById("firstNameError").textContent = "";
+        }
+
+        if (lastName === "") {
+            document.getElementById("lastNameError").textContent = "Last name is required";
+            errors = true;
+        } else {
+            document.getElementById("lastNameError").textContent = "";
+        }
+
+        if (email === "") {
+            document.getElementById("emailError").textContent = "Email is required";
+            errors = true;
+        } else if (!isValidEmail(email)) {
+            document.getElementById("emailError").textContent = "Invalid email format";
+            errors = true;
+        } else {
+            document.getElementById("emailError").textContent = "";
+        }
+
+        if (password === "") {
+            document.getElementById("passwordError").textContent = "Password is required";
+            errors = true;
+        } else if (password.length < 8) {
+            document.getElementById("passwordError").textContent = "Password must be at least 8 characters long";
+            errors = true;
+        } else {
+            document.getElementById("passwordError").textContent = "";
+        }
+
+        if (confirmPassword === "") {
+            document.getElementById("confirmPasswordError").textContent = "Confirm Password is required";
+            errors = true;
+        } else if (confirmPassword !== password) {
+            document.getElementById("confirmPasswordError").textContent = "Passwords do not match";
+            errors = true;
+        } else {
+            document.getElementById("confirmPasswordError").textContent = "";
+        }
+
+        if (dob === "") {
+            document.getElementById("dobError").textContent = "Date of Birth is required";
+            errors = true;
+        } else {
+            document.getElementById("dobError").textContent = "";
+        }
+
+        if (gender === "") {
+            document.getElementById("genderError").textContent = "Gender is required";
+            errors = true;
+        } else {
+            document.getElementById("genderError").textContent = "";
+        }
+
+        if (address === "") {
+            document.getElementById("addressError").textContent = "Address is required";
+            errors = true;
+        } else {
+            document.getElementById("addressError").textContent = "";
+        }
+
+        if (course === "") {
+            document.getElementById("courseError").textContent = "Course is required";
+            errors = true;
+        } else {
+            document.getElementById("courseError").textContent = "";
+        }
+
+        if (phoneNumber === "") {
+            document.getElementById("phoneNumberError").textContent = "Phone number is required";
+            errors = true;
+        } else if (!isValidPhoneNumber(phoneNumber)) {
+            document.getElementById("phoneNumberError").textContent = "Invalid phone number format";
+            errors = true;
+        } else {
+            document.getElementById("phoneNumberError").textContent = "";
+        }
+
+
+    if (!errors) {
+       
+        alert("Your registration form is successfully submitted");
+        return true;
+    } else {
+        return false; 
+    }
+}
+
+    
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function isValidPhoneNumber(phoneNumber) {
+        const phoneRegex = /^\+91[0-9]{10}$/;
+        return phoneRegex.test(phoneNumber);
+    }
+</script>
+
+</body>
+</html>
